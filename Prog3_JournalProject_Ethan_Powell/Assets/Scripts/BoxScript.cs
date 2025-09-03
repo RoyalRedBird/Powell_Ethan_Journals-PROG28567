@@ -20,10 +20,10 @@ public class BoxScript : MonoBehaviour
         Vector2 boxBottomLeftCorner = new Vector2(transform.position.x - boxSize, transform.position.y - boxSize);
         Vector2 boxBottomRightCorner = new Vector2(transform.position.x + boxSize, transform.position.y - boxSize);
 
-        Debug.DrawLine(boxTopLeftCorner, boxTopRightCorner, Color.grey);
-        Debug.DrawLine(boxTopRightCorner, boxBottomRightCorner, Color.grey);
-        Debug.DrawLine(boxBottomRightCorner, boxBottomLeftCorner, Color.grey);
-        Debug.DrawLine(boxBottomLeftCorner, boxTopLeftCorner, Color.grey);
+        Debug.DrawLine(boxTopLeftCorner, boxTopRightCorner, Color.white);
+        Debug.DrawLine(boxTopRightCorner, boxBottomRightCorner, Color.white);
+        Debug.DrawLine(boxBottomRightCorner, boxBottomLeftCorner, Color.white);
+        Debug.DrawLine(boxBottomLeftCorner, boxTopLeftCorner, Color.white);
 
     }
 

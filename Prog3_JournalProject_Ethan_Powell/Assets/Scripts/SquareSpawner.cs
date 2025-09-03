@@ -23,10 +23,12 @@ public class SquareSpawner : MonoBehaviour
         Vector2 boxBottomLeftCorner = new Vector2(mouseScreenPos.x - boxSize, mouseScreenPos.y - boxSize);
         Vector2 boxBottomRightCorner = new Vector2(mouseScreenPos.x + boxSize, mouseScreenPos.y - boxSize);
 
-        Debug.DrawLine(boxTopLeftCorner, boxTopRightCorner, Color.grey);
-        Debug.DrawLine(boxTopRightCorner, boxBottomRightCorner, Color.grey);
-        Debug.DrawLine(boxBottomRightCorner, boxBottomLeftCorner, Color.grey);
-        Debug.DrawLine(boxBottomLeftCorner, boxTopLeftCorner, Color.grey);
+        Color boxColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+
+        Debug.DrawLine(boxTopLeftCorner, boxTopRightCorner, boxColor);
+        Debug.DrawLine(boxTopRightCorner, boxBottomRightCorner, boxColor);
+        Debug.DrawLine(boxBottomRightCorner, boxBottomLeftCorner, boxColor);
+        Debug.DrawLine(boxBottomLeftCorner, boxTopLeftCorner, boxColor);
 
 
         if(Input.mouseScrollDelta.y > 0)
@@ -40,6 +42,16 @@ public class SquareSpawner : MonoBehaviour
         {
 
             boxSize -= 0.1f;
+
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+
+            GameObject spawnedBox = GameObject.Instantiate(boxObject);
+
+            spawnedBox.transform.position = mouseScreenPos;
+            spawnedBox.GetComponent<BoxScript>().SetBoxSize(boxSize);
 
         }
 
