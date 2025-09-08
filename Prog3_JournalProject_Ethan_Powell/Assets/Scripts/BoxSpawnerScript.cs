@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-
+using System.Collections;
 
 public class BoxSpawnerScript : MonoBehaviour
 {
@@ -8,6 +8,8 @@ public class BoxSpawnerScript : MonoBehaviour
     private int boxesToRender = 0;
     [SerializeField] TMP_InputField boxInputField;
     [SerializeField] GameObject boxPrefab;
+
+    ArrayList boxCatalogue = new ArrayList();
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,6 +33,13 @@ public class BoxSpawnerScript : MonoBehaviour
 
         if(newCount > 0 && newCount <= 9 ) {
 
+            foreach (GameObject oldBox in boxCatalogue)
+            {
+
+                GameObject.Destroy(oldBox);
+
+            }
+
             boxesToRender = newCount;
 
             for (int i = 1; i <= boxesToRender; i++)
@@ -41,6 +50,8 @@ public class BoxSpawnerScript : MonoBehaviour
                 currentLocation.x = currentLocation.x + (1.5f * i);
 
                 newBox.transform.position = currentLocation;
+
+                boxCatalogue.Add(newBox);
 
             }
 
