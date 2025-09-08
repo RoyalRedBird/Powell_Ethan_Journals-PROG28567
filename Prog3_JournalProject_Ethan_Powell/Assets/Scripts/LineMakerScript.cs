@@ -7,6 +7,7 @@ public class LineMakerScript : MonoBehaviour
 
     private Vector2[] vectorIndex = new Vector2[999];
     private int currentIndex = 0;
+    private float addVectorTimer = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,13 +21,34 @@ public class LineMakerScript : MonoBehaviour
 
         Vector2 mouseScreenPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetMouseButtonDown(0))
+
+
+        if (Input.GetMouseButton(0))
         {
 
-            vectorIndex[currentIndex] = mouseScreenPos;
-            Debug.Log("Vector index " + currentIndex + " saved as " + mouseScreenPos);
+            Debug.Log("Mouse is now held down.");
 
-            currentIndex++;
+            addVectorTimer += Time.deltaTime;
+
+            if(addVectorTimer >= 1)
+            {
+
+                vectorIndex[currentIndex] = mouseScreenPos;
+                Debug.Log("Vector index " + currentIndex + " saved as " + mouseScreenPos);
+
+                currentIndex++;
+
+                addVectorTimer = 0;
+
+            }
+
+        }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+
+            addVectorTimer = 0;
+            Debug.Log("Mouse is no longer being held down.");
 
         }
 
@@ -46,12 +68,17 @@ public class LineMakerScript : MonoBehaviour
                     currentVector = vectorIndex[i];
                     nextVector = vectorIndex[i + 1];
 
+                    Vector2 oldPlusNew = currentVector + nextVector;
+
                     Debug.DrawLine(currentVector, nextVector, Color.red);
                     combinedMagnitude += Mathf.Sqrt(Vector2.SqrMagnitude(currentVector + nextVector));
 
-                }
+                    Debug.Log("Manual magnitude is " + Mathf.Sqrt((Mathf.Pow(oldPlusNew.x, 2) + Mathf.Pow(oldPlusNew.y, 2))));
+
+            }
 
                 Debug.Log("The current combined magnitude of this line is " + combinedMagnitude);
+                
 
             }         
         
