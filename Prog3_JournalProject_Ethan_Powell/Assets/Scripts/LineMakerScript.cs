@@ -65,12 +65,12 @@ public class LineMakerScript : MonoBehaviour
                 currentVector = vectorIndex[i];
                 previousVector = vectorIndex[i - 1];
 
-                Vector2 oldPlusNew = currentVector + previousVector;
+                Vector2 oldPlusNew = previousVector - currentVector;
 
                 Debug.DrawLine(currentVector, previousVector, Color.red);
-                combinedMagnitude += Mathf.Sqrt(Vector2.SqrMagnitude(currentVector + previousVector));
+                combinedMagnitude += Mathf.Sqrt(Vector2.SqrMagnitude(currentVector - previousVector));
 
-                Debug.Log("Manual magnitude is " + Mathf.Sqrt((Mathf.Pow(oldPlusNew.x, 2) + Mathf.Pow(oldPlusNew.y, 2))));
+                Debug.Log("Magnitude of line " + oldPlusNew + " is " + Mathf.Sqrt(Mathf.Pow(oldPlusNew.x, 2) + Mathf.Pow(oldPlusNew.y, 2)));
 
             }
 
