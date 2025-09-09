@@ -55,33 +55,27 @@ public class LineMakerScript : MonoBehaviour
         if(currentIndex > 1) {
 
             Vector2 currentVector;
-            Vector2 nextVector;
+            Vector2 previousVector;
 
-            if(vectorIndex[currentIndex + 1] != null)
+            float combinedMagnitude = 0;
+
+            for (int i = 1; i < currentIndex; i++)
             {
 
-                float combinedMagnitude = 0;
+                currentVector = vectorIndex[i];
+                previousVector = vectorIndex[i - 1];
 
-                for (int i = 0; i < currentIndex; i++)
-                {
+                Vector2 oldPlusNew = currentVector + previousVector;
 
-                    currentVector = vectorIndex[i];
-                    nextVector = vectorIndex[i + 1];
+                Debug.DrawLine(currentVector, previousVector, Color.red);
+                combinedMagnitude += Mathf.Sqrt(Vector2.SqrMagnitude(currentVector + previousVector));
 
-                    Vector2 oldPlusNew = currentVector + nextVector;
-
-                    Debug.DrawLine(currentVector, nextVector, Color.red);
-                    combinedMagnitude += Mathf.Sqrt(Vector2.SqrMagnitude(currentVector + nextVector));
-
-                    Debug.Log("Manual magnitude is " + Mathf.Sqrt((Mathf.Pow(oldPlusNew.x, 2) + Mathf.Pow(oldPlusNew.y, 2))));
+                Debug.Log("Manual magnitude is " + Mathf.Sqrt((Mathf.Pow(oldPlusNew.x, 2) + Mathf.Pow(oldPlusNew.y, 2))));
 
             }
 
-                Debug.Log("The current combined magnitude of this line is " + combinedMagnitude);
-                
+            Debug.Log("The current combined magnitude of this line is " + combinedMagnitude);
 
-            }         
-        
         }
 
     }
