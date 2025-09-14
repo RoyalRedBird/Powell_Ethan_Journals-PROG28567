@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
 
         }
 
+        DetectAsteroids(2.5f, asteroidTransforms);
+
     }
 
     public IEnumerator SpawnBombAtOffset(Vector3 inOffset)
@@ -131,6 +133,29 @@ public class Player : MonoBehaviour
         }
 
         transform.position = Vector2.Lerp(transform.position, target.position, ratio);
+
+    }
+
+    public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
+    {
+
+        foreach(Transform spaceRock in inAsteroids)
+        {
+
+            float rockDistance = Vector3.Distance(transform.position, spaceRock.position);
+
+            if(rockDistance <= inMaxRange)
+            {
+
+                Vector2 lineDirection = Vector3.Normalize(transform.position - spaceRock.position);
+
+                Vector2 lineEndpoint = new Vector2((transform.position.x - (lineDirection.x * 2.5f)), (transform.position.y - (lineDirection.y * 2.5f)));
+
+                Debug.DrawLine(transform.position, lineEndpoint, Color.green);
+
+            }
+
+        }
 
     }
 
