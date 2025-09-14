@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
             TheNormalizer(new Vector2(-3, 2));
             TheNormalizer(new Vector2(1.5f, 3.5f));
 
+            deployBombTrail(3, 0.4f);
+
         }
 
     }
@@ -52,6 +54,20 @@ public class Player : MonoBehaviour
         Vector2 verifyNormalize = testVector.normalized;
 
         print($"The manually normalized vector is {normalizedVector}, the automatically normalized vector is {verifyNormalize}.");
+
+    }
+
+    public void deployBombTrail(int numberOfBombs, float bombSpacing)
+    {
+
+        for(int i = 1; i <= numberOfBombs; i++)
+        {
+
+            Vector2 spawnLocation = transform.position +  (-transform.up * (i * bombSpacing));
+
+            GameObject newBomb = GameObject.Instantiate(bombPrefab, spawnLocation, Quaternion.identity);
+
+        }
 
     }
 
