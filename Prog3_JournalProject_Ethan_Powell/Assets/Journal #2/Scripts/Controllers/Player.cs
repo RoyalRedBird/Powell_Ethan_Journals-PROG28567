@@ -35,6 +35,13 @@ public class Player : MonoBehaviour
         
         }
 
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+
+            WarpPlayer(enemyTransform, 1.5f);
+
+        }
+
     }
 
     public IEnumerator SpawnBombAtOffset(Vector3 inOffset)
@@ -110,6 +117,20 @@ public class Player : MonoBehaviour
             GameObject newBomb = GameObject.Instantiate(bombPrefab, spawnLocation, Quaternion.identity);
 
         }
+
+    }
+
+    public void WarpPlayer(Transform target, float ratio)
+    {
+
+        if(ratio > 1)
+        {
+
+            ratio = 1;
+
+        }
+
+        transform.position = Vector2.Lerp(transform.position, target.position, ratio);
 
     }
 
