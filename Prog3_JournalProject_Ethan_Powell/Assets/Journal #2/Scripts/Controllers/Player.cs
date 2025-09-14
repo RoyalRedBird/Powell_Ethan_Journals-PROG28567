@@ -29,6 +29,12 @@ public class Player : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.N)) {
+
+            SpawnBombAtCorner(2f);
+        
+        }
+
     }
 
     public IEnumerator SpawnBombAtOffset(Vector3 inOffset)
@@ -43,6 +49,42 @@ public class Player : MonoBehaviour
         GameObject newBomb = GameObject.Instantiate(bombPrefab, spawnLocation, Quaternion.identity);
 
         yield return null;
+
+    }
+
+    public void SpawnBombAtCorner(float inOffset)
+    {
+
+        int randomCorner = Random.Range(0, 4);
+        print(randomCorner);
+
+        Vector2 spawnLocation = transform.position;
+
+        switch (randomCorner) {
+
+            //Top Left
+            case 0:
+                spawnLocation = new Vector2(transform.position.x - inOffset, transform.position.y + inOffset);
+                break;
+
+            //Top Right
+            case 1:
+                spawnLocation = new Vector2(transform.position.x + inOffset, transform.position.y + inOffset);
+                break;
+
+            //Bottom Left
+            case 2:
+                spawnLocation = new Vector2(transform.position.x - inOffset, transform.position.y - inOffset);
+                break;
+
+            //Bottom Right
+            case 3:
+                spawnLocation = new Vector2(transform.position.x + inOffset, transform.position.y - inOffset);
+                break;
+
+        }      
+
+        GameObject newBomb = GameObject.Instantiate(bombPrefab, spawnLocation, Quaternion.identity);
 
     }
 
