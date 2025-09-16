@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +8,14 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public List<Transform> asteroidTransforms;
+
+    [Header("Motion Properties")]
+    bool moveKeyDown;
+    public float MaxSpeed;
+    public float accellTime;
+    public float decelSpeed;
+    public float decelTime;
+    Vector3 velocity = Vector3.zero;
     
     // Update is called once per frame
     void Update()
@@ -43,6 +52,93 @@ public class Player : MonoBehaviour
         }
 
         DetectAsteroids(2.5f, asteroidTransforms);
+        PlayerMovement();
+
+    }
+
+    void PlayerMovement()
+    {
+
+        moveKeyDown = false;
+
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+
+            velocity.x -= (MaxSpeed / accellTime) * Time.deltaTime;
+            moveKeyDown = true;
+
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+
+            velocity.x += (MaxSpeed / accellTime) * Time.deltaTime;
+            moveKeyDown = true;
+
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+
+            velocity.y -= (MaxSpeed / accellTime) * Time.deltaTime;
+            moveKeyDown = true;
+
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+
+            velocity.y += (MaxSpeed / accellTime) * Time.deltaTime;
+            moveKeyDown = true;
+
+        }
+
+        if (!moveKeyDown) {
+
+            if (velocity.x > 0)
+            {
+
+                velocity.x -= (decelSpeed / decelTime) * Time.deltaTime;
+
+            }
+            else if (velocity.x < 0) {
+
+                velocity.x += (decelSpeed / decelTime) * Time.deltaTime;
+
+            }
+
+            if (velocity.y > 0)
+            {
+
+                velocity.y -= (decelSpeed / decelTime) * Time.deltaTime;
+
+            }
+            else if (velocity.y < 0)
+            {
+
+                velocity.y += (decelSpeed / decelTime) * Time.deltaTime;
+
+            }
+
+        }
+
+        Vector3.ClampMagnitude(velocity, MaxSpeed);
+
+        //Clues were gathered from this forum post. https://discussions.unity.com/t/how-to-detect-screen-edge-in-unity/459224
+        //It pointed out using Camera.WorldToScreenPoint to track where the ship is on screen and I thought it fitting.
+        if (Camera.main.WorldToScreenPoint(transform.position + velocity).x >= Camera.main.pixelWidth || Camera.main.WorldToScreenPoint(transform.position + velocity).x <= 0) {
+
+            velocity.x = 0;
+        
+        }
+
+        if (Camera.main.WorldToScreenPoint(transform.position + velocity).y >= Camera.main.pixelHeight || Camera.main.WorldToScreenPoint(transform.position + velocity).y <= 0)
+        {
+
+            velocity.y = 0;
+
+        }
+
+        transform.position += velocity;
 
     }
 
