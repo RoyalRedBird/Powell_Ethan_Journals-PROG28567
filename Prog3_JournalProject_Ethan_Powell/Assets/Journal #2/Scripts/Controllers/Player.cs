@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
 
         DetectAsteroids(2.5f, asteroidTransforms);
         PlayerMovement();
+        DetectEnemy(3, 8);
+        DetectEnemy(5, 20);
 
     }
 
@@ -253,6 +255,39 @@ public class Player : MonoBehaviour
 
         }
 
+    }
+
+    void DetectEnemy(float radius, int circlePoints) {
+
+        List<Vector2> points = new List<Vector2>();
+        float angleIncrement = 360 / circlePoints;
+
+        float incrementAsRadians = angleIncrement * Mathf.Deg2Rad;
+
+        for(int i = 0; i <= circlePoints; i++)
+        {
+
+            Vector2 currentPos = transform.position;
+            currentPos += new Vector2(Mathf.Cos(incrementAsRadians * i), Mathf.Sin(incrementAsRadians * i)) * radius;
+
+            points.Add(currentPos);
+
+        }
+
+        Color detectColor = Color.green;
+
+        if (Vector3.Distance(transform.position, enemyTransform.position) <= radius) { 
+        
+            detectColor = Color.red;
+
+        }
+
+        for (int i = 1; i < points.Count; i++) {
+
+            Debug.DrawLine(points[i - 1], points[i], detectColor);
+        
+        }
+    
     }
 
 }
