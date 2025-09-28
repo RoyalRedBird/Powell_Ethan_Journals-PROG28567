@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public Transform enemyTransform;
     public GameObject bombPrefab;
+    public GameObject powerUpPrefab;
     public List<Transform> asteroidTransforms;
 
     [Header("Motion Properties")]
@@ -48,6 +49,13 @@ public class Player : MonoBehaviour
         {
 
             WarpPlayer(enemyTransform, 1.5f);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+
+            SpawnPowerups(3, 16);
 
         }
 
@@ -288,6 +296,26 @@ public class Player : MonoBehaviour
         
         }
     
+    }
+
+    void SpawnPowerups(float radius, int numOfPowerups)
+    {
+
+        float angleIncrement = 360 / numOfPowerups;
+
+        float incrementAsRadians = angleIncrement * Mathf.Deg2Rad;
+
+        for (int i = 0; i <= numOfPowerups; i++)
+        {
+
+            Vector3 currentPos = transform.position;
+            currentPos += new Vector3(Mathf.Cos(incrementAsRadians * i), Mathf.Sin(incrementAsRadians * i)) * radius;
+
+            GameObject newPowerup = GameObject.Instantiate(powerUpPrefab);
+            newPowerup.transform.position = currentPos;
+
+        }
+
     }
 
 }
