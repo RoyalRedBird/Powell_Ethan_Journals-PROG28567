@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         PlayerMovement();
         DetectEnemy(3, 8);
         DetectEnemy(5, 20);
+        RotatePlayerToMouse();
 
     }
 
@@ -316,6 +317,20 @@ public class Player : MonoBehaviour
 
         }
 
+    }
+
+    void RotatePlayerToMouse() {
+
+        Vector2 mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Debug.DrawLine(transform.position, mousePosInWorld, Color.cyan);
+
+        float angleInDeg = Mathf.Atan2(mousePosInWorld.y - transform.position.y, mousePosInWorld.x - transform.position.x) * Mathf.Rad2Deg;
+
+        Debug.Log($"<color=yellow><size=16>{angleInDeg}</size></color>");
+
+        transform.rotation = Quaternion.Euler(0, 0, angleInDeg - 90);
+    
     }
 
 }
