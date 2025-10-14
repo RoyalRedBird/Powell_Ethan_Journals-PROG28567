@@ -82,14 +82,17 @@ public class Enemy : MonoBehaviour
 
         //Clues were gathered from this forum post. https://discussions.unity.com/t/how-to-detect-screen-edge-in-unity/459224
         //It pointed out using Camera.WorldToScreenPoint to track where the ship is on screen and I thought it fitting.
-        if (Camera.main.WorldToScreenPoint(transform.position + velocity).x >= Camera.main.pixelWidth || Camera.main.WorldToScreenPoint(transform.position + velocity).x <= 0)
+
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(transform.position + velocity);
+
+        if (screenPoint.x >= Camera.main.pixelWidth || screenPoint.x <= 0)
         {
 
             velocity.x = 0;
 
         }
 
-        if (Camera.main.WorldToScreenPoint(transform.position + velocity).y >= Camera.main.pixelHeight || Camera.main.WorldToScreenPoint(transform.position + velocity).y <= 0)
+        if (screenPoint.y >= Camera.main.pixelHeight || screenPoint.y <= 0)
         {
 
             velocity.y = 0;

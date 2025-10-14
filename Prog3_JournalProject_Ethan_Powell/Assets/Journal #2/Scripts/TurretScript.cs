@@ -24,8 +24,6 @@ public class TurretScript : MonoBehaviour
         Debug.DrawLine(transform.position, easyTargetDir, Color.red);
         Debug.DrawLine(transform.position, transform.position + transform.up, Color.cyan);
 
-        Debug.Log(Vector2.Dot(transform.up, easyTargetDir));
-
         float upAngle = CalculateDegAngleFromVector(transform.up);
         float deltaAngle = Mathf.DeltaAngle(upAngle, angleToTarget);
 
@@ -50,13 +48,13 @@ public class TurretScript : MonoBehaviour
         if (Vector2.Dot(transform.up, easyTargetDir) > 0)
         {
 
-            Debug.Log("Target is in front of the turret.");
+            //Debug.Log("Target is in front of the turret.");
 
         }
         else
         {
 
-            Debug.Log("Target is behind the turret.");
+            //Debug.Log("Target is behind the turret.");
 
         }
 
